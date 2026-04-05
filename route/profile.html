@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Profile</title>
+    <link rel="stylesheet" href="profile.css" />
+  </head>
+  <body>
+    <script src="auth.js"></script>
+    <script>
+      requireAuth();
+    </script>
+    <div class="profile-wrapper">
+      <header class="profile-header">
+        <div class="cover"></div>
+
+        <div class="avatar-box">
+          <img id="avatar" />
+          <div id="avatarFallback" class="avatar-fallback">👤</div>
+        </div>
+
+        <h1 id="name">Loading...</h1>
+        <p id="username">@username</p>
+
+        <div class="profile-actions">
+          <button id="editBtn" onclick="openModal()">Edit Profile</button>
+          <button id="logoutBtn" class="danger">Logout</button>
+        </div>
+      </header>
+
+      <main class="profile-content">
+        <section class="card">
+          <h3>My Sections</h3>
+          <div class="grid">
+            <a href="projects.html" class="grid-item">📁 Projects</a>
+            <a href="testimonial.html" class="grid-item">💬 Testimonials</a>
+            <a href="index.html#devFooter" class="grid-item">📞 Contacts</a>
+            <a href="admin.html" class="grid-item">🛠 Admin</a>
+          </div>
+        </section>
+
+        <section class="card">
+          <h3>Quick Actions</h3>
+          <div class="grid">
+            <a href="add-project.html" class="grid-item">➕ Add Project</a>
+            <a href="add-testimonial.html" class="grid-item"
+              >➕ Add Testimonial</a
+            >
+          </div>
+        </section>
+
+        <section class="card">
+          <h3>Account Info</h3>
+          <p><strong>Email:</strong> <span id="email"></span></p>
+          <p><strong>Joined:</strong> <span id="joined"></span></p>
+        </section>
+      </main>
+    </div>
+
+    <!-- Edit Profile Modal -->
+
+    <div class="profile-container">
+      <div class="profile-info">
+        <h2 id="displayName">Name</h2>
+        <p id="displayUsername">@username</p>
+      </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal" id="editModal">
+      <div class="modal-content">
+        <h3>Edit Profile</h3>
+        <div class="avatar-wrapper" onclick="openFilePicker()">
+          <img
+            id="modalImage"
+            src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNlZWUiIHJ4PSI2MCIvPjxjaXJjbGUgY3g9IjYwIiBjeT0iNDAiIHI9IjI0IiBmaWxsPSIjY2NjIi8+PHJlY3QgeT0iNzAiIHdpZHRoPSI4MCIgaGVpZ2h0PSI0MCIgZmlsbD0iI2NjYyIvPjwvc3ZnPg=="
+            alt="Avatar"
+          />
+
+          <div class="edit-icon">✎</div>
+        </div>
+
+        <input
+          type="file"
+          id="fileInput"
+          accept="image/*"
+          style="display: none"
+        />
+
+        <label>Name</label>
+        <input type="text" id="nameInput" />
+
+        <label>Username</label>
+        <input type="text" id="usernameInput" />
+
+        <div class="modal-buttons">
+          <button class="save-btn" onclick="saveProfile()">Save</button>
+          <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="profile.js"></script>
+  </body>
+</html>

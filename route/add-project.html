@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add-Project</title>
+    <link rel="stylesheet" href="add-project.css" />
+  </head>
+  <body>
+    <script src="auth.js"></script>
+    <script>
+      requireAuth();
+    </script>
+    <div class="container">
+      <!-- DASHBOARD -->
+      <div class="dashboard">
+        <div class="card">
+          <a href="index.html">
+            <img
+              src="https://cdn.jsdelivr.net/npm/heroicons@2.0.13/24/outline/home.svg"
+              alt=""
+              class="icons"
+            />
+            Home</a
+          >
+        </div>
+
+        <div class="card">
+          <a href="profile.html">
+            <img
+              src="https://cdn.jsdelivr.net/npm/heroicons@2.0.13/24/outline/user.svg"
+              alt=""
+              class="icons"
+            />
+            Profile</a
+          >
+        </div>
+
+        <div class="card">
+          <a href="add-testimonial.html"
+            ><img
+              src="https://cdn.jsdelivr.net/npm/heroicons@2.0.13/24/outline/plus-circle.svg"
+              alt=""
+              class="icons"
+            />
+            Add TML</a
+          >
+        </div>
+
+        <div class="card">
+          <a href="admin.html"
+            ><img
+              src="https://cdn.jsdelivr.net/npm/heroicons@2.0.13/24/outline/cog.svg"
+              alt=""
+              class="icons"
+            />
+            Admin</a
+          >
+        </div>
+
+        <div class="card" id="logout">
+          <img
+            src="https://cdn.jsdelivr.net/npm/heroicons@2.0.13/24/outline/users.svg"
+            alt=""
+            class="icons"
+          />
+          Logout
+        </div>
+      </div>
+
+      <!-- MAIN ADD PROJECT FORM -->
+      <div class="main">
+        <h2>Add New Project</h2>
+
+        <form id="projectForm">
+          <input type="text" id="name" placeholder="Project Name" required />
+          <textarea
+            id="description"
+            placeholder="Project Description"
+          ></textarea>
+
+          <!-- TECH STACK -->
+          <div class="tagbox" id="tagbox">
+            <input
+              type="text"
+              class="tag-input"
+              placeholder="Type tech and press Enter"
+            />
+          </div>
+
+          <!-- LINKS -->
+          <input type="url" id="live" placeholder="Live Demo URL" />
+          <input type="url" id="github" placeholder="GitHub URL" />
+
+          <!-- IMAGE UPLOAD -->
+          <label class="img-upload" for="images">
+            <i
+              class="fas fa-cloud-upload-alt"
+              style="font-size: 36px; color: #6366f1"
+            ></i>
+            <p>Click or drag images here</p>
+            <input type="file" id="images" multiple accept="image/*" />
+            <div class="thumbs" id="thumbs"></div>
+          </label>
+
+          <div style="display: flex; gap: 10px; margin-top: 10px">
+            <button type="reset" class="ghost">Clear</button>
+            <button type="submit" class="primary">Add Project</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ADMIN MODAL -->
+    <div class="overlay" id="overlay">
+      <div class="modal" id="modal">
+        <h3>Admin Access</h3>
+        <p>Enter admin code to unlock</p>
+        <input type="password" id="code" placeholder="Admin Code" />
+        <button class="primary" onclick="verifyAdmin()">Unlock</button>
+      </div>
+    </div>
+
+    <script src="add-project.js"></script>
+  </body>
+</html>

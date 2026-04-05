@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #0f172a;
+        color: #fff;
+      }
+
+      .white {
+        color: #fff;
+      }
+
+      .container {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        min-height: 100vh;
+        color: #94a3b8;
+      }
+
+      /* SIDEBAR */
+      .sidebar {
+        background: #020617;
+        padding: 20px;
+        color: #94a3b8;
+      }
+
+      .sidebar h2 {
+        margin-bottom: 30px;
+      }
+
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        cursor: pointer;
+        height: 40px;
+        transition: background-color 0.3s ease;
+        width: 90%;
+        background-color: #1e293b;
+      }
+
+      .nav-item:hover {
+        background: #00ffee22;
+      }
+
+      a {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        text-decoration: none;
+        color: #9ca3af;
+        align-items: center;
+        padding-left: 10px;
+      }
+      #logout {
+        padding-left: 15px;
+      }
+      /* MAIN */
+      .main {
+        padding: 30px;
+      }
+
+      .card {
+        background: #020617;
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        color: #94a3b8;
+      }
+
+      .profile {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .profile img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+      }
+
+      .card-small {
+        background: #1e293b;
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        color: #94a3b8;
+      }
+
+      .card-small:hover {
+        background-color: #00ffee22;
+        transition: background-color 0.5s ease;
+      }
+
+      .card-small i {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      .card-info {
+        background: #020617;
+        padding: 20px;
+        border-radius: 12px;
+        margin-top: 20px;
+        color: #94a3b8;
+      }
+
+      /* ===== ADMIN MODAL ===== */
+      .overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(2, 6, 23, 0.8);
+        backdrop-filter: blur(10px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .modal {
+        width: 320px;
+        padding: 22px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+      }
+      .modal h3 {
+        margin-bottom: 10px;
+      }
+      .modal p {
+        color: #9ca3af;
+        font-size: 13px;
+        margin-bottom: 12px;
+      }
+      .modal input {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      #code {
+        border-radius: 15px;
+        border: none;
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        height: 40px;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+        box-sizing: border-box;
+        width: 90%;
+        padding: 0 10px;
+      }
+
+      #code::placeholder {
+        color: #9ca3af;
+      }
+      #code:focus {
+        outline: none;
+        border: 2px solid #38bdf8;
+      }
+
+      .unlock {
+        background: #38bdf8;
+        border: none;
+        color: whitesmoke;
+        padding: 8px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .modal .shake {
+        animation: shake 0.35s linear;
+      }
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-6px);
+        }
+        75% {
+          transform: translateX(6px);
+        }
+      }
+
+      @media screen and (max-width: 768px) {
+        .container {
+          grid-template-columns: 1fr;
+          gap: 0px;
+        }
+        .nav-item {
+          background: #0f172a;
+          border-radius: 35px;
+          font-size: larger;
+          margin-left: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <script src="auth.js"></script>
+    <script>
+      requireAuth();
+    </script>
+    <div class="container">
+      <!-- SIDEBAR -->
+      <div class="sidebar">
+        <h2 class="white">Admin</h2>
+        <div class="nav-item">
+          <a href="index.html"><i class="bx bx-home"></i> Home</a>
+        </div>
+        <div class="nav-item">
+          <a href="profile.html"><i class="bx bx-user"></i> Profile</a>
+        </div>
+        <div class="nav-item">
+          <a href="add-project.html"
+            ><i class="bx bx-folder-plus"></i> Add Project</a
+          >
+        </div>
+        <div class="nav-item">
+          <a href="add-testimonial.html"
+            ><i class="bx bx-message-square-add"></i> Add Testimonial</a
+          >
+        </div>
+        <div class="nav-item">
+          <a href="messages.html"><i class="bx bx-message"></i> Messages</a>
+        </div>
+        <div class="nav-item" id="logout">
+          <i class="bx bx-log-out"></i> Logout
+        </div>
+      </div>
+      <!-- MAIN -->
+      <div class="main">
+        <!-- PROFILE -->
+        <div class="card profile">
+          <img
+            src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNlZWUiIHJ4PSI2MCIvPjxjaXJjbGUgY3g9IjYwIiBjeT0iNDAiIHI9IjI0IiBmaWxsPSIjY2NjIi8+PHJlY3QgeT0iNzAiIHdpZHRoPSI4MCIgaGVpZ2h0PSI0MCIgZmlsbD0iI2NjYyIvPjwvc3ZnPg=="
+          />
+          <div>
+            <h2 id="name" class="white">Loading...</h2>
+            <p id="bio"></p>
+          </div>
+        </div>
+        <!-- STATS -->
+        <div class="grid">
+          <div class="card-small">
+            <i class="bx bx-folder"></i>
+            <p>Projects</p>
+          </div>
+          <div class="card-small">
+            <i class="bx bx-chat"></i>
+            <p>Testimonials</p>
+          </div>
+          <div class="card-small">
+            <i class="bx bx-message"></i>
+            <p>Messages</p>
+          </div>
+
+          <div class="card-small">
+            <div class="card-content">
+              <!-- ICON -->
+              <div class="icon">
+                <i class="bx bx-group"></i>
+              </div>
+
+              <!-- TEXT -->
+              <div>
+                <h4>Total Users</h4>
+                <p id="userCount">Loading...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ACCOUNT INFO -->
+        <div class="card-info">
+          <h3 class="white">Account Info</h3>
+          <p>Email: <span id="email"></span></p>
+        </div>
+      </div>
+
+      <!-- ADMIN MODAL -->
+      <div class="overlay" id="overlay">
+        <div class="modal" id="modal">
+          <h3>Admin Access</h3>
+          <p>Enter admin code to unlock</p>
+          <input type="password" id="code" placeholder="Admin Code" />
+          <button class="primary unlock" onclick="verifyAdmin()">Unlock</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      const token = localStorage.getItem("token");
+
+      const overlay = document.getElementById("overlay");
+      const modal = document.getElementById("modal");
+      const logout = document.getElementById("logout");
+
+      // ===== ADMIN VERIFY =====
+      async function verifyAdmin() {
+        const code = document.getElementById("code").value;
+        try {
+          const res = await fetch("http://localhost:5000/verifyAdmin", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ code }),
+          });
+          if (res.ok) {
+            overlay.style.display = "none";
+            sessionStorage.setItem("admin", "true");
+          } else {
+            modal.classList.remove("shake");
+            void modal.offsetWidth;
+            modal.classList.add("shake");
+            setTimeout(() => (window.location.href = "index.html"), 500);
+          }
+        } catch (e) {
+          window.location.href = "index.html";
+        }
+      }
+      if (sessionStorage.getItem("admin") === "true") {
+        overlay.style.display = "none";
+      }
+
+      async function loadProfile() {
+        const token = localStorage.getItem("token");
+
+        const res = await fetch("http://localhost:5000/admin", {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        });
+
+        const data = await res.json();
+
+        document.getElementById("name").innerText = data.name;
+        document.getElementById("bio").innerText = data.bio;
+        document.getElementById("email").innerText = data.email;
+      }
+
+      loadProfile();
+
+      async function loadUserCount() {
+        try {
+          // Get token from storage
+          const token = localStorage.getItem("token");
+
+          const response = await fetch("http://localhost:5000/count", {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (!response.ok) {
+            throw new Error("Unauthorized or error");
+          }
+
+          const data = await response.json();
+
+          const count = data.totalUsers;
+
+          const el = document.getElementById("userCount");
+
+          el.textContent = count === 1 ? `${count} User` : `${count} Users`;
+        } catch (error) {
+          console.error(error);
+          document.getElementById("userCount").textContent = "Error";
+        }
+      }
+
+      window.addEventListener("DOMContentLoaded", loadUserCount);
+    </script>
+  </body>
+</html>

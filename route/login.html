@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="login.css" />
+  </head>
+  <body>
+    <div class="page">
+      <div class="card">
+        <div class="tabs">
+          <button id="loginTab" class="tab active">Login</button>
+          <button id="registerTab" class="tab">Create Account</button>
+        </div>
+
+        <!-- LOGIN -->
+        <form id="loginForm" class="form show">
+          <h2>Welcome Back</h2>
+
+          <input
+            type="email"
+            name="email"
+            placeholder="Email address"
+            required
+            id="regEmail"
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+            id="regPassword"
+          />
+
+          <button class="primary">Login</button>
+        </form>
+
+        <!-- REGISTER -->
+        <form id="registerForm" class="form">
+          <h2>Create Account</h2>
+
+          <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            required
+            id="regUsername"
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email address"
+            required
+            id="regEmail"
+          />
+
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+            id="regPassword"
+          />
+
+          <button class="primary">Register</button>
+        </form>
+      </div>
+    </div>
+    <script src="login.js"></script>
+  </body>
+</html>

@@ -1,0 +1,511 @@
+<!-- user.html -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>users-chat</title>
+  </head>
+  <body>
+    <style>
+      body {
+        margin: 0;
+        display: flex;
+        height: 100vh;
+        font-family: sans-serif;
+      }
+
+      /* SIDEBAR */
+      .sidebar {
+        width: 420px;
+        background-color: #112230;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 20px 0;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+      }
+
+      .sidebar-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 12px 20px;
+        cursor: pointer;
+        border-radius: 8px;
+        position: relative;
+        transition: all 0.2s ease-in-out;
+      }
+
+      .sidebar-item:hover {
+        background-color: #e5e7eb;
+        transform: translateX(2px);
+      }
+
+      .sidebar-item.active {
+        background-color: #888;
+        font-weight: 600;
+      }
+
+      .icon {
+        width: 24px;
+        height: 24px;
+        stroke: #636569; /* consistent dark color */
+      }
+
+      .label {
+        font-size: 16px;
+        color: #3e4451;
+      }
+
+      /* Online indicator */
+      .online-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #0b93f6;
+        border: 2px solid #f9f9f9;
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      /* Mobile sidebar */
+      @media screen and (max-width: 768px) {
+        .sidebar {
+          width: 60px;
+          padding: 10px 0;
+        }
+
+        .sidebar-item {
+          justify-content: center;
+          gap: 0;
+          padding: 10px 0;
+        }
+
+        .label {
+          display: none;
+        }
+
+        .online-dot {
+          right: 8px;
+        }
+      }
+      /* CHAT */
+      .chat {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .header {
+        background: #112230;
+        color: #fff;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border-left: 1px solid #193348;
+        position: relative;
+      }
+
+      .header img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-top: 6px;
+      }
+
+      #adminActive {
+        font-size: 11px;
+        color: #888;
+        position: absolute;
+        left: 78px;
+        top: 57%;
+        transform: translateY(-50%);
+      }
+      #activeCircle {
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background-color: #0b93f6;
+        border: 1px solid #f9f9f9;
+        position: absolute;
+        left: 60px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .messages {
+        flex: 1;
+        overflow-y: auto;
+        height: 100%;
+        scrollbar-width: none;
+        scroll-behavior: smooth;
+        padding: 10px;
+        background: #193348;
+      }
+
+      .msg {
+        padding: 8px;
+        margin: 5px;
+        border-radius: 8px;
+        max-width: 40vw;
+        display: flex;
+        flex-direction: column;
+        word-wrap: break-word;
+      }
+      .me {
+        background: #0b93f6;
+        color: #fff;
+        margin-left: auto;
+        width: fit-content;
+      }
+
+      .them {
+        background: #888;
+        color: #fff;
+        margin-right: auto;
+        width: fit-content;
+
+        word-break: break-all;
+      }
+      .text {
+        word-wrap: break-word;
+        display: flex;
+        word-break: break-all;
+      }
+
+      .time {
+        font-size: 11px;
+        color: #ccc;
+        margin-left: 10px;
+        align-self: flex-end;
+      }
+      /* INPUT */
+      input {
+        flex: 1;
+        padding: 12px;
+        outline: none;
+        background-color: #112230;
+        color: #fff;
+        border: none;
+      }
+      .input-area {
+        display: flex;
+        border-top: 0.5px solid #ccc;
+        border-left: 1px solid #193348;
+      }
+
+      .send-button {
+        background-color: #0b93f6; /* professional blue */
+        border: none;
+
+        padding: 10px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease-in-out;
+      }
+
+      .send-button:hover {
+        background-color: #193348;
+        color: #0b93f6; /* darker blue on hover */
+        transform: scale(1);
+      }
+      .send-icon:hover {
+        stroke: #0b93f6; /* blue on hover */
+      }
+      .send-button:active {
+        transform: scale(0.95);
+      }
+      .send-icon:active {
+        stroke: #0b93f6;
+        transform: scale(0.95); /* blue on active */
+      }
+
+      .send-icon {
+        width: 25px;
+        height: 25px;
+        stroke: #fff; /* white color for contrast */
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        transition: all 0.3s ease-in-out;
+      }
+
+      /* MOBILE */
+      @media (max-width: 600px) {
+        .sidebar {
+          width: 70px;
+        }
+        .item span {
+          display: none;
+        }
+      }
+    </style>
+
+    <div class="sidebar">
+      <!-- Home -->
+      <div class="sidebar-item active">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+        >
+          <path
+            d="M3 9L12 2l9 7v11a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-4H9v4a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9z"
+          />
+        </svg>
+        <span class="label">Home</span>
+      </div>
+
+      <!-- Profile -->
+      <div class="sidebar-item">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+        >
+          <path
+            d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"
+          />
+        </svg>
+        <span class="label">Profile</span>
+        <span class="online-dot"></span>
+      </div>
+
+      <!-- Inquiry -->
+      <div class="sidebar-item">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+        >
+          <path
+            d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z"
+          />
+        </svg>
+        <span class="label">Inquiry</span>
+      </div>
+
+      <!-- Projects -->
+      <div class="sidebar-item">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+        >
+          <path d="M3 7v14h18V7H3zm0-4h18v2H3V3z" />
+        </svg>
+        <span class="label">Projects</span>
+      </div>
+
+      <!-- Add Project -->
+      <div class="sidebar-item">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+        >
+          <path d="M12 5v14m7-7H5" />
+        </svg>
+        <span class="label">Add Project</span>
+      </div>
+
+      <!-- Testimonials -->
+      <div class="sidebar-item">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+        >
+          <path
+            d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z"
+          />
+        </svg>
+        <span class="label">Testimonials</span>
+      </div>
+
+      <!-- Add Testimonial -->
+      <div class="sidebar-item">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+        >
+          <path d="M12 5v14m7-7H5" />
+        </svg>
+        <span class="label">Add Testimonial</span>
+      </div>
+
+      <!-- Logout -->
+      <div class="sidebar-item">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+        >
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+          <path d="M16 17l5-5-5-5" />
+          <path d="M21 12H9" />
+        </svg>
+        <span class="label">Logout</span>
+      </div>
+    </div>
+    <div class="chat">
+      <div class="header">
+        <img src="myLogo.jpeg" />
+        AlexSite Team
+        <p id="activeCircle"></p>
+        <p id="adminActive">active now</p>
+      </div>
+
+      <div class="messages" id="msgs"></div>
+
+      <div class="input-area">
+        <input id="input" placeholder="Type message..." />
+        <!-- Send message button -->
+        <button class="send-button" id="sendBtn">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="send-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M22 2L11 13" />
+            <path d="M22 2L15 22L11 13L2 9L22 2Z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
+    <script>
+      const token = localStorage.getItem("token");
+      const socket = io("http://localhost:5000");
+
+      let me;
+
+      async function init() {
+        const res = await fetch("http://localhost:5000/me", {
+          headers: { Authorization: "Bearer " + token },
+        });
+
+        me = await res.json();
+        socket.emit("join", me.id);
+
+        const r = await fetch(`http://localhost:5000/messages/${me.id}`, {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        });
+
+        render(await r.json());
+      }
+
+      function render(data) {
+        const box = document.getElementById("msgs");
+        box.innerHTML = "";
+
+        data.forEach((m) => {
+          const d = document.createElement("div");
+          let senderId = parseInt(m.sender_id);
+          d.className = "msg " + (senderId === me.id ? "me" : "them");
+          const text = document.createElement("div");
+          text.className = "text";
+          text.innerText = m.message;
+          const time = document.createElement("div");
+          time.className = "time";
+          time.innerText = formatTimestamp(m.timestamp);
+          d.appendChild(text);
+          d.appendChild(time);
+          console.log("RECEIVED:", m);
+          box.appendChild(d);
+        });
+      }
+
+      function sendMessage() {
+        const input = document.getElementById("input");
+        const text = input.value.trim();
+        if (!text) return;
+
+        socket.emit("send", {
+          from: me.id,
+          to: "admin",
+          text,
+        });
+
+        input.value = "";
+
+        scrollToBottom();
+      }
+
+      document.getElementById("sendBtn").onclick = sendMessage;
+
+      document.getElementById("input").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") sendMessage();
+      });
+
+      socket.on("receive", (m) => {
+        const d = document.createElement("div");
+
+        let senderId = parseInt(m.sender_id);
+        console.log("SENDER ID:", senderId);
+        console.log(senderId === me.id);
+        d.className = "msg " + (senderId === me.id ? "me" : "them");
+        const text = document.createElement("div");
+        text.className = "text";
+        text.innerText = m.message;
+        const time = document.createElement("div");
+        time.className = "time";
+        time.innerText = formatTimestamp(m.timestamp);
+        d.appendChild(text);
+        d.appendChild(time);
+        console.log("RECEIVED:", m);
+        msgs.appendChild(d);
+      });
+
+      function formatTimestamp(timestamp) {
+        const date = new Date(timestamp);
+        let hours = date.getHours();
+        const minutes = date.getMinutes();
+        const ampm = hours >= 12 ? "PM" : "AM";
+        hours = hours % 12 || 12; // convert 0 → 12, 13 → 1, etc.
+        const formattedMinutes = minutes.toString().padStart(2, "0");
+        return `${hours}:${formattedMinutes} ${ampm}`;
+      }
+
+      function scrollToBottom() {
+        const chat = document.getElementById("msgs");
+        chat.style.scrollBehavior = "smooth";
+        setTimeout(() => {
+          chat.scrollTop = chat.scrollHeight;
+        }, 50);
+      }
+
+      setTimeout(scrollToBottom, 50);
+
+      init();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="myLogo.jpeg" />
+    <title>AlexSite</title>
+    <link rel="stylesheet" href="homepage.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="logo">AlexSite</div>
+      <nav class="nav">
+        <a href="inquiry.html">Enquiry</a>
+        <a href="project.html">Projects</a>
+        <a href="#devFooter">Contacts</a>
+        <a href="add-testimonial.html">Add TML</a>
+        <a href="add-project.html">Add PJT</a>
+        <a href="admin.html">Admin</a>
+        <a href="profile.html">Profile</a>
+      </nav>
+
+      <!-- HAMBURGER (MOBILE) -->
+      <div class="menu-toggle" id="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </header>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="inquiry.html">Enquiry</a>
+      <a href="project.html">Projects</a>
+      <a href="#devFooter">Contacts</a>
+      <a href="add-testimonial.html">Add TML</a>
+      <a href="add-project.html">Add PJT</a>
+      <a href="admin.html">Admin</a>
+      <a href="profile.html">Profile</a>
+    </div>
+
+    <section class="hero">
+      <div class="container">
+        <div class="left">
+          <h1>Hi, I'm <span class="highlight">Alex</span></h1>
+
+          <p>I am a Full-Stack Web Developer</p>
+          <p>
+            building everything from interactive frontends to scalable backends,
+          </p>
+          <p>crafting web experiences that bring ideas to life.</p>
+
+          <div class="buttons">
+            <button class="hire">Hire Me</button>
+            <a href="users-chat.html" id="letsTalkAnchorTag"
+              ><button class="talk">Let's Talk</button></a
+            >
+          </div>
+        </div>
+
+        <div class="right">
+          <div id="star-bg-container">
+            <canvas id="star-bg"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="scroll">Scroll Up ↑</div>
+    </section>
+
+    <!-- Testimonial Section -->
+
+    <div class="testimonial-section">
+      <!-- Heading -->
+      <h2 class="testimonial-heading">Testimonials</h2>
+
+      <div class="testimonial-content">
+        <!-- Big Card -->
+        <div class="card big-card">
+          <div class="featured-slider"></div>
+        </div>
+
+        <!-- Small Cards Wrapper -->
+        <div class="small-cards-wrapper">
+          <div class="small-cards" id="small-cards">
+            <!-- 20 Small Cards -->
+          </div>
+
+          <!-- Arrows -->
+          <div class="arrows">
+            <span id="arrow-left">&#8592;</span>
+            <span id="arrow-right">&#8594;</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Features Section -->
+    <div class="section-title" id="title">
+      <h1>Engineering Capabilities</h1>
+    </div>
+    <!-- ===== ALL FEATURES ===== -->
+    <section class="feature">
+      <div class="text-card">
+        <h2>Real-Time APIs</h2>
+        <p class="textPara">
+          Streaming, polling and WebSocket architectures for live data.
+        </p>
+        <button class="control-btn">Pause</button>
+      </div>
+      <div class="code-card">
+        <div class="code-scroll">
+          <pre><code id="code1" class="language-javascript"></code></pre>
+        </div>
+      </div>
+    </section>
+    <section class="feature">
+      <div class="text-card">
+        <h2>Secure Authentication</h2>
+        <p class="textPara">JWT, sessions and OAuth based implementations.</p>
+        <button class="control-btn">Pause</button>
+      </div>
+      <div class="code-card">
+        <div class="code-scroll">
+          <pre><code id="code2" class="language-javascript"></code></pre>
+        </div>
+      </div>
+    </section>
+    <section class="feature">
+      <div class="text-card">
+        <h2>Microservices</h2>
+        <p class="textPara">
+          Independent service architecture using REST and message queues.
+        </p>
+        <button class="control-btn">Pause</button>
+      </div>
+      <div class="code-card">
+        <div class="code-scroll">
+          <pre><code id="code3" class="language-javascript"></code></pre>
+        </div>
+      </div>
+    </section>
+    <section class="feature">
+      <div class="text-card">
+        <h2>Database Optimization</h2>
+        <p class="textPara">
+          Indexing, query tuning and caching for performance.
+        </p>
+        <button class="control-btn">Pause</button>
+      </div>
+      <div class="code-card">
+        <div class="code-scroll">
+          <pre><code id="code4" class="language-javascript"></code></pre>
+        </div>
+      </div>
+    </section>
+    <section class="feature">
+      <div class="text-card">
+        <h2>Automated Testing</h2>
+        <p class="textPara">
+          Unit, integration and end‑to‑end testing pipelines.
+        </p>
+        <button class="control-btn">Pause</button>
+      </div>
+      <div class="code-card">
+        <div class="code-scroll">
+          <pre><code id="code5" class="language-javascript"></code></pre>
+        </div>
+      </div>
+    </section>
+    <section class="feature">
+      <div class="text-card">
+        <h2>Cloud Deployment</h2>
+        <p class="textPara">
+          Containerized deployment and orchestration using CI/CD.
+        </p>
+        <button class="control-btn">Pause</button>
+      </div>
+      <div class="code-card">
+        <div class="code-scroll">
+          <pre><code id="code6" class="language-javascript"></code></pre>
+        </div>
+      </div>
+    </section>
+    <section class="feature">
+      <div class="text-card">
+        <h2>WebSockets</h2>
+        <p class="textPara">
+          Bi‑directional communication for live applications.
+        </p>
+        <button class="control-btn">Pause</button>
+      </div>
+      <div class="code-card">
+        <div class="code-scroll">
+          <pre><code id="code7" class="language-javascript"></code></pre>
+        </div>
+      </div>
+    </section>
+    <section class="feature">
+      <div class="text-card">
+        <h2>AI Integration</h2>
+        <p class="textPara">
+          Connecting applications to machine learning inference services.
+        </p>
+        <button class="control-btn">Pause</button>
+      </div>
+      <div class="code-card">
+        <div class="code-scroll">
+          <pre><code id="code8" class="language-javascript"></code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+     DEVELOPER FOOTER SECTION
+     ========================= -->
+    <footer class="dev-footer" id="devFooter">
+      <!-- animated background -->
+      <div class="dev-footer__bg"></div>
+
+      <div class="dev-footer__container">
+        <h2 class="dev-footer__title dev-anim">
+          Let’s Build Something Together
+        </h2>
+
+        <p class="dev-footer__desc dev-anim">
+          I design and engineer scalable, modern web systems. Have a project or
+          idea? Let’s talk.
+        </p>
+
+        <div class="dev-footer__buttons dev-anim">
+          <a
+            href="alexsite090702@email.com"
+            class="dev-footer__btn dev-footer__btn--primary"
+          >
+            Contact Me
+          </a>
+
+          <a
+            href="https://github.com/yourusername"
+            target="_blank"
+            class="dev-footer__btn dev-footer__btn--secondary"
+          >
+            View More Projects
+          </a>
+        </div>
+
+        <div class="dev-footer__contacts dev-anim">
+          <a href="alexsite090702@email.com">alexsite090702@email.com</a>
+          <span>•</span>
+          <a href="tel:+2349070226886">+234 907 022 6886</a>
+          <span>•</span>
+          <a href="https://github.com/yourusername" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </footer>
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+    <!-- Prism.js for syntax highlighting -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-javascript.min.js"></script>
+    <!-- Typed.js for typing animation -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <!-- Your script -->
+    <script src="homepage.js"></script>
+  </body>
+</html>
