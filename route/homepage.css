@@ -928,7 +928,7 @@ code {
 
   #star-bg-container {
     position: relative;
-    width: 350px; /* times 2 */
+    width: 300px; /* times 2 */
     height: 160px; /* times 2 */
     overflow: hidden;
     background: transparent; /* same dark background */
