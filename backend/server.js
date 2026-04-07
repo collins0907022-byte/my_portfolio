@@ -311,7 +311,7 @@ app.get("/updatedProfile", async (req, res) => {
 });
 
 // Update profile
-app.put("/updatProfile", upload.single("avatar"), async (req, res) => {
+app.put("/update", upload.single("avatar"), async (req, res) => {
   console.log("Update profile attempt:", req.body);
   try {
     const user = getUserFromToken(req);
@@ -498,12 +498,10 @@ app.post("/addTestimonial", upload.single("image"), async (req, res) => {
       VALUES ($1, $2, $3, $4, $5) RETURNING *
     `;
     const values = [user.id, name, message, link, imageUrl];
-    const { data, error } = await pool.query(query, values);
-
-    if (error) throw error;
+    const data = await pool.query(query, values);
 
     res.json({ success: true, testimonial: data });
-    console.log("New testimonial added:", data);
+    console.log("New testimonial added:", data.rows[0]);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to add testimonial" });
