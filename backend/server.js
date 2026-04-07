@@ -21,6 +21,7 @@ const io = new Server(server, {
   cors: {
     origin: "https://my-portfolio-nu-ecru-11.vercel.app",
     methods: ["GET", "POST", "PUT"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   },
 });
