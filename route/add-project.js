@@ -8,11 +8,11 @@ const logout = document.getElementById("logout");
 async function verifyAdmin() {
   const code = document.getElementById("code").value;
   try {
-    const res = await fetch("http://localhost:5000/verifyAdmin", {
+    const res = await fetch("https://alexsite-qpff.onrender.com/verifyAdmin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: "Bearer " + token,
       },
       body: JSON.stringify({ code }),
     });
@@ -99,10 +99,10 @@ document.getElementById("projectForm").addEventListener("submit", async (e) => {
   fd.append("githubLink", document.getElementById("github").value);
   filesArr.forEach((f) => fd.append("images", f));
   try {
-    const res = await fetch("http://localhost:5000/addProject", {
+    const res = await fetch("https://alexsite-qpff.onrender.com/addProject", {
       method: "POST",
       body: fd,
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: "Bearer " + token },
     });
     if (!res.ok) throw new Error("Failed");
     alert("Project added successfully");

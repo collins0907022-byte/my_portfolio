@@ -332,13 +332,13 @@
 
     <script>
       const token = localStorage.getItem("token");
-      const socket = io("http://localhost:5000");
+      const socket = io("https://alexsite-qpff.onrender.com");
 
       let currentUser = null;
 
       /* LOAD USERS */
       async function loadUsers() {
-        const res = await fetch("http://localhost:5000/users");
+        const res = await fetch("https://alexsite-qpff.onrender.com/users");
         const users = await res.json();
 
         console.log("USERS:", users);
@@ -381,7 +381,9 @@
     ${user.name}
   `;
 
-        const res = await fetch(`http://localhost:5000/messages/${user.id}`);
+        const res = await fetch(
+          `https://alexsite-qpff.onrender.com/messages/${user.id}`,
+        );
         const messages = await res.json();
 
         console.log("MESSAGES:", messages);
@@ -507,14 +509,17 @@
       async function verifyAdmin() {
         const code = document.getElementById("code").value;
         try {
-          const res = await fetch("http://localhost:5000/verifyAdmin", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
+          const res = await fetch(
+            "https://alexsite-qpff.onrender.com/verifyAdmin",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + token,
+              },
+              body: JSON.stringify({ code }),
             },
-            body: JSON.stringify({ code }),
-          });
+          );
           if (res.ok) {
             overlay.style.display = "none";
             sessionStorage.setItem("admin", "true");

@@ -7,7 +7,7 @@ async function requireAuth() {
   }
 
   try {
-    const res = await fetch("http://localhost:5000/auth-check", {
+    const res = await fetch("https://alexsite-qpff.onrender.com/auth-check", {
       headers: {
         Authorization: "Bearer " + token,
       },
