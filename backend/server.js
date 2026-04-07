@@ -26,7 +26,6 @@ const io = new Server(server, {
 });
 
 const privatekey = process.env.JWT_PRIVATE_KEY;
-const dbPassword = process.env.DB_PASSWORD;
 
 app.use(cookie());
 app.use(express.json());
@@ -35,6 +34,7 @@ app.use(
   cors({
     origin: "https://my-portfolio-nu-ecru-11.vercel.app",
     methods: ["GET", "POST", "PUT"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   }),
 );
@@ -66,13 +66,6 @@ pool
   .then(() => console.log("connected to pg"))
   .catch((err) => console.error("DB error", err));
 
-/*********************
-token generate function
-**********************/
-function generatetoken(user) {
-  const payload = user;
-  return jwt.sign(payload, privatekey);
-}
 // ======================
 // AUTH FUNCTION
 // ======================

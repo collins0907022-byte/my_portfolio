@@ -7,7 +7,7 @@ async function loadProfile() {
     return;
   }
 
-  const res = await fetch("http://localhost:5000/profile", {
+  const res = await fetch("https://alexsite-qpff.onrender.com/profile", {
     headers: {
       Authorization: "Bearer " + token,
     },
@@ -60,9 +60,12 @@ async function loadUpdatedProfile() {
   }
 
   try {
-    const res = await fetch("http://localhost:5000/updatedProfile", {
-      headers: { Authorization: "Bearer " + token },
-    });
+    const res = await fetch(
+      "https://alexsite-qpff.onrender.com/updatedProfile",
+      {
+        headers: { Authorization: "Bearer " + token },
+      },
+    );
 
     const data = await res.json();
     console.log("Updated profile data:", data);
@@ -143,11 +146,14 @@ async function saveProfile() {
   if (selectedFile) formData.append("avatar", selectedFile);
 
   try {
-    const res = await fetch("http://localhost:5000/updateProfile", {
-      method: "PUT",
-      headers: { Authorization: "Bearer " + token },
-      body: formData,
-    });
+    const res = await fetch(
+      "https://alexsite-qpff.onrender.com/updateProfile",
+      {
+        method: "PUT",
+        headers: { Authorization: "Bearer " + token },
+        body: formData,
+      },
+    );
 
     const data = await res.json();
     console.log("Update response:", data);
@@ -178,7 +184,7 @@ async function logout() {
   }
 
   try {
-    const res = await fetch("http://localhost:5000/logout", {
+    const res = await fetch("https://alexsite-qpff.onrender.com/logout", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
