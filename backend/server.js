@@ -138,6 +138,7 @@ CREATE TABLE IF NOT EXISTS admin (
     email VARCHAR(255) UNIQUE NOT NULL,
     bio TEXT
 );`);
+
     console.log("admin table is ready");
   } catch (err) {
     console.error("Error creating admin table:", err);
