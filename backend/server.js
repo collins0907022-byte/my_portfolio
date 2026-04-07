@@ -39,13 +39,6 @@ app.use(
   }),
 );
 
-// Configure Cloudinary with environment variables
-cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.API_KEY,
-  api_secret: process.env.API_SECRET,
-});
-
 // Supabase client for storage
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -64,12 +57,14 @@ const supabase = createClient(
 
 // Set up PostgreSQL connection pool
 const pool = new Pool({
-  user: "postgres",
-  password: dbPassword,
-  host: "localhost",
-  port: 5432,
-  database: "alexsite",
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false },
 });
+
+pool
+  .connect()
+  .then(() => console.log("connected to pg"))
+  .catch((err) => console.error("DB error", err));
 
 /*********************
 token generate function
@@ -837,6 +832,10 @@ io.on("connection", (socket) => {
     io.to(d.to).emit("receive", r.rows[0]);
     io.to(d.from).emit("receive", r.rows[0]);
   });
+});
+
+app.get("/", (req, res) => {
+  res.send("backend is running successfully");
 });
 
 // ------------------- START SERVER ------------------- //
