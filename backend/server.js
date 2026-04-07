@@ -19,7 +19,7 @@ const bodyParser = require("body-parser");
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://127.0.0.1:5500",
+    origin: "https://my-portfolio-nu-ecru-11.vercel.app",
     methods: ["GET", "POST", "PUT"],
     credentials: true,
   },
@@ -33,7 +33,7 @@ app.use(express.json());
 app.use(express.static("frontend"));
 app.use(
   cors({
-    origin: "http://127.0.0.1:5500",
+    origin: "https://my-portfolio-nu-ecru-11.vercel.app",
     methods: ["GET", "POST", "PUT"],
     credentials: true,
   }),

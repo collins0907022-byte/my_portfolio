@@ -22,7 +22,7 @@ loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const data = Object.fromEntries(new FormData(loginForm));
 
-  const res = await fetch("http://localhost:5000/login", {
+  const res = await fetch("https://alexsite-qpff.onrender.com/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
@@ -54,7 +54,7 @@ registerForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(registerForm));
 
-    const res = await fetch("http://localhost:5000/register", {
+    const res = await fetch("https://alexsite-qpff.onrender.com/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
