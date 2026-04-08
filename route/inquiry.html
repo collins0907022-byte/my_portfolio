@@ -245,6 +245,10 @@
     </style>
   </head>
   <body>
+    <script src="auth.js"></script>
+    <script>
+      requireAuth();
+    </script>
     <!-- SIDEBAR -->
     <div class="sidebar">
       <h2>Dashboard</h2>
@@ -347,20 +351,23 @@
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const res = await fetch("https://alexsite-qpff.onrender.com/request", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + token,
+        const res = await fetch(
+          "https://alexsite-qpff.onrender.com/inquiries",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token,
+            },
+            body: JSON.stringify({
+              firstName: firstName.value,
+              middleName: middleName.value,
+              email: email.value,
+              subject: subject.value,
+              message: message.value,
+            }),
           },
-          body: JSON.stringify({
-            firstName: firstName.value,
-            middleName: middleName.value,
-            email: email.value,
-            subject: subject.value,
-            message: message.value,
-          }),
-        });
+        );
 
         const data = await res.json();
         console.log(data);
