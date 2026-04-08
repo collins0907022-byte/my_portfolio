@@ -59,7 +59,6 @@ const supabase = createClient(
 // Set up PostgreSQL connection pool
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false },
 });
 
 pool
