@@ -736,7 +736,7 @@ app.post("/request", async (req, res) => {
       html: emailTemplate(firstName),
     });
 
-    res.status(200).json({ message: firstName });
+    res.status(200).json({ message: firstName, con: console.log("done") });
     console.log(firstName);
   } catch (err) {
     console.log(err);

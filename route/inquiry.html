@@ -350,24 +350,21 @@
       // submit
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
-
-        const res = await fetch(
-          "https://alexsite-qpff.onrender.com/inquiries",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + token,
-            },
-            body: JSON.stringify({
-              firstName: firstName.value,
-              middleName: middleName.value,
-              email: email.value,
-              subject: subject.value,
-              message: message.value,
-            }),
+        const token = localStorage.getItem("token");
+        const res = await fetch("https://alexsite-qpff.onrender.com/request", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
           },
-        );
+          body: JSON.stringify({
+            firstName: firstName.value,
+            middleName: middleName.value,
+            email: email.value,
+            subject: subject.value,
+            message: message.value,
+          }),
+        });
 
         const data = await res.json();
         console.log(data);
