@@ -336,7 +336,7 @@
 
       // animated dots
       const dotsContainer = document.getElementById("dots");
-      for (let i = 0; i < 30; i++) {
+      for (let i = 0; i < 20; i++) {
         const d = document.createElement("div");
         d.className = "dot";
         d.style.animationDelay = i * 0.08 + "s";
@@ -346,8 +346,6 @@
       // submit
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
-
-        const token = localStorage.getItem("token");
 
         const res = await fetch("https://alexsite-qpff.onrender.com/request", {
           method: "POST",
