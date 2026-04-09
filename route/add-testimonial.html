@@ -22,6 +22,87 @@
         line-height: 1.5;
       }
 
+      /* toast*******************************************************/
+      #toast-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 320px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        z-index: 9999;
+        pointer-events: none; /* Allows clicks through empty space */
+      }
+
+      .toast {
+        display: flex;
+        align-items: center;
+        padding: 14px 18px;
+        border-radius: 10px;
+        color: #fff;
+        font-family: Arial, sans-serif;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+        opacity: 0;
+        transform: translateX(120%);
+        pointer-events: auto;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .toast-success {
+        background: #38bdf8;
+      }
+      .toast-error {
+        background: #f44336;
+      }
+      .toast-info {
+        background: #2196f3;
+      }
+      .toast-warning {
+        background: #ff9800;
+      }
+
+      .toast .close-btn {
+        margin-left: auto;
+        cursor: pointer;
+        font-weight: bold;
+        padding-left: 12px;
+      }
+
+      .toast-progress {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.8);
+        width: 100%;
+        border-radius: 0 0 10px 10px;
+      }
+
+      @keyframes slideIn {
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes slideOut {
+        to {
+          opacity: 0;
+          transform: translateX(120%);
+        }
+      }
+
+      @keyframes progressBar {
+        from {
+          width: 100%;
+        }
+        to {
+          width: 0%;
+        }
+      }
+
       /* ================= WRAPPER ================= */
       .wrapper {
         display: flex;
@@ -204,6 +285,9 @@
     <script>
       requireAuth();
     </script>
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
     <div class="wrapper">
       <!-- SIDEBAR / DASHBOARD -->
       <div class="sidebar">
@@ -291,15 +375,57 @@
           );
           const data = await res.json();
           if (res.ok) {
-            alert("Testimonial added successfully");
+            showToast("Testimonial added successfully", "success");
           } else {
-            alert("Failed to add testimonial");
+            showToast("Failed to add testimonial", "error");
           }
         } catch (err) {
           console.error(err);
-          alert("Error submitting testimonial");
+          showToast("Failed to add testimonial", "error");
         }
       });
+
+      // showtoast function**********************************8
+      function showToast(message, type = "success", duration = 4000) {
+        const container = document.getElementById("toast-container");
+
+        // Create toast
+        const toast = document.createElement("div");
+        toast.classList.add("toast", `toast-${type}`);
+
+        // HTML structure
+        toast.innerHTML = `
+    <span>${message}</span>
+    <span class="close-btn">&times;</span>
+    <div class="toast-progress"></div>
+  `;
+
+        // Add to container
+        container.appendChild(toast);
+
+        // Slide-in animation
+        toast.style.animation = `slideIn 0.5s forwards`;
+
+        // Progress bar animation
+        const progress = toast.querySelector(".toast-progress");
+        progress.style.animation = `progressBar ${duration}ms linear forwards`;
+
+        // Close button
+        toast.querySelector(".close-btn").onclick = () => removeToast(toast);
+
+        // Auto-remove after duration
+        const autoRemove = setTimeout(() => removeToast(toast), duration);
+
+        // Remove function
+        function removeToast(toastElement) {
+          toastElement.style.animation = `slideOut 0.5s forwards`;
+          setTimeout(() => {
+            if (toastElement.parentNode)
+              toastElement.parentNode.removeChild(toastElement);
+          }, 500);
+          clearTimeout(autoRemove);
+        }
+      }
     </script>
   </body>
 </html>

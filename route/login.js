@@ -64,6 +64,11 @@ registerForm.addEventListener("submit", async (e) => {
       showToast("registration successfully", "success");
       loginTab.click();
     }
+
+    showToast(
+      "An error occurred during registration. Please try again.",
+      "error",
+    );
   } catch (err) {
     console.error("Registration error:", err);
     showToast(

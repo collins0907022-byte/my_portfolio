@@ -104,14 +104,14 @@ document.getElementById("projectForm").addEventListener("submit", async (e) => {
       body: fd,
       headers: { Authorization: "Bearer " + token },
     });
-    if (!res.ok) throw new Error("Failed");
-    alert("Project added successfully");
+    if (!res.ok) showToast("Failed", "error");
+    showToast("Project added successfully", "success");
     document.getElementById("projectForm").reset();
     tags = [];
     filesArr = [];
     renderThumbs();
   } catch (err) {
-    alert("Error adding project");
+    showToast("Failed", "error");
   }
 });
 
@@ -122,3 +122,45 @@ logout.addEventListener("click", () => {
   sessionStorage.removeItem("admin");
   window.location.href = "index.html";
 });
+
+// showtoast function**********************************8
+function showToast(message, type = "success", duration = 4000) {
+  const container = document.getElementById("toast-container");
+
+  // Create toast
+  const toast = document.createElement("div");
+  toast.classList.add("toast", `toast-${type}`);
+
+  // HTML structure
+  toast.innerHTML = `
+    <span>${message}</span>
+    <span class="close-btn">&times;</span>
+    <div class="toast-progress"></div>
+  `;
+
+  // Add to container
+  container.appendChild(toast);
+
+  // Slide-in animation
+  toast.style.animation = `slideIn 0.5s forwards`;
+
+  // Progress bar animation
+  const progress = toast.querySelector(".toast-progress");
+  progress.style.animation = `progressBar ${duration}ms linear forwards`;
+
+  // Close button
+  toast.querySelector(".close-btn").onclick = () => removeToast(toast);
+
+  // Auto-remove after duration
+  const autoRemove = setTimeout(() => removeToast(toast), duration);
+
+  // Remove function
+  function removeToast(toastElement) {
+    toastElement.style.animation = `slideOut 0.5s forwards`;
+    setTimeout(() => {
+      if (toastElement.parentNode)
+        toastElement.parentNode.removeChild(toastElement);
+    }, 500);
+    clearTimeout(autoRemove);
+  }
+}
