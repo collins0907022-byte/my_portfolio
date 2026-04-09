@@ -351,12 +351,11 @@
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
         const token = localStorage.getItem("token");
-
-        const res = await fetch("http://localhost:5000/request", {
+        const res = await fetch("https://alexsite-qpff.onrender.com/request", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " + token,
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             firstName: firstName.value,
