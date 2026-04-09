@@ -156,12 +156,13 @@ async function saveProfile() {
     );
 
     const data = await res.json();
-    showToast("profile updated successfully", "success");
+
     console.log("Update response:", data);
     if (res.ok) {
       document.getElementById("displayName").textContent = username;
       document.getElementById("displayUsername").textContent = "@" + username;
       if (data.avatar) closeModal();
+      showToast("profile updated successfully", "success");
     } else {
       showToast("profile updated successfully", "error");
       console.error("Update failed:", data);
