@@ -163,9 +163,11 @@ async function saveProfile() {
       document.getElementById("displayUsername").textContent = "@" + username;
       if (data.avatar) closeModal();
     } else {
+      showToast("profile updated successfully", "error");
       console.error("Update failed:", data);
     }
   } catch (err) {
+    showToast("profile updated successfully", "error");
     console.error(err);
     console.error("Profile update failed:", err);
   }
