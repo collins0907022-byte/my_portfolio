@@ -26,6 +26,8 @@ const io = new Server(server, {
   },
 });
 
+const bucket = process.env.SUPABASE_BUCKET;
+
 const privatekey = process.env.JWT_PRIVATE_KEY;
 
 app.use(cookie());
@@ -64,7 +66,7 @@ async function checkStorage() {
     return;
   }
 
-  const bucketName = process.env.SUPABASE_BUCKET;
+  const bucketName = bucket;
 
   const exists = data.some((bucket) => bucket.name === bucketName);
 
@@ -430,7 +432,7 @@ app.put("/updateProfile", upload.single("avatar"), async (req, res) => {
 
           // 3️⃣ Delete from Supabase bucket
           const { data, error: deleteError } = await supabase.storage
-            .from(process.env.SUPABASE_BUCKET)
+            .from(bucket)
             .remove([filePath]); // must pass as array
 
           if (deleteError) {
@@ -448,7 +450,7 @@ app.put("/updateProfile", upload.single("avatar"), async (req, res) => {
       const filePath = `${user.id}/${fileName}`;
 
       const { error: uploadError } = await supabase.storage
-        .from(process.env.SUPABASE_BUCKET)
+        .from(bucket)
         .upload(filePath, req.file.buffer, {
           upsert: true,
           contentType: req.file.mimetype,
@@ -456,9 +458,7 @@ app.put("/updateProfile", upload.single("avatar"), async (req, res) => {
 
       if (uploadError) throw uploadError;
 
-      const { data } = supabase.storage
-        .from(process.env.SUPABASE_BUCKET)
-        .getPublicUrl(filePath);
+      const { data } = supabase.storage.from(bucket).getPublicUrl(filePath);
 
       avatarUrl = data.publicUrl;
     }
@@ -502,14 +502,12 @@ app.post("/addTestimonial", upload.single("image"), async (req, res) => {
     if (req.file) {
       const fileName = `${Date.now()}-${req.file.originalname}`;
       const { error: uploadError } = await supabase.storage
-        .from(process.env.SUPABASE_BUCKET)
+        .from(bucket)
         .upload(fileName, req.file.buffer, { contentType: req.file.mimetype });
 
       if (uploadError) throw uploadError;
 
-      const { data } = supabase.storage
-        .from(process.env.SUPABASE_BUCKET)
-        .getPublicUrl(fileName);
+      const { data } = supabase.storage.from(bucket).getPublicUrl(fileName);
 
       imageUrl = data.publicUrl;
     }
@@ -585,14 +583,13 @@ app.post("/addProject", upload.array("images"), async (req, res) => {
     for (let file of files) {
       const fileName = `${Date.now()}_${file.originalname}`;
       const { data, error } = await supabase.storage
-        .from(process.env.SUPABASE_BUCKET)
+        .from(bucket)
         .upload(fileName, file.buffer, { contentType: file.mimetype });
 
       if (error) throw error;
 
-      const publicUrl = supabase.storage
-        .from(process.env.SUPABASE_BUCKET)
-        .getPublicUrl(fileName).data.publicUrl;
+      const publicUrl = supabase.storage.from(bucket).getPublicUrl(fileName)
+        .data.publicUrl;
 
       uploadedUrls.push(publicUrl);
     }
