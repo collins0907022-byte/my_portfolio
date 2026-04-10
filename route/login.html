@@ -398,11 +398,14 @@
           e.preventDefault();
           const data = Object.fromEntries(new FormData(registerForm));
 
-          const res = await fetch("http://localhost:5000/register", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data),
-          });
+          const res = await fetch(
+            "https://alexsite-qpff.onrender.com/register",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data),
+            },
+          );
 
           if (res.ok) {
             showToast("registration successfully", "success");
