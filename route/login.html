@@ -3,77 +3,384 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
-    <link rel="stylesheet" href="login.css" />
+    <title>Auth — Premium Split</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family:
+          Inter,
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          sans-serif;
+        background: radial-gradient(
+          1200px 600px at 10% 10%,
+          #1e293b 0%,
+          #020617 60%
+        );
+        color: #fff;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* ===== WRAPPER ===== */
+      .auth {
+        width: 100%;
+        max-width: 1100px;
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        border-radius: 24px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.04);
+        backdrop-filter: blur(18px);
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
+      }
+
+      @media (max-width: 900px) {
+        .auth {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ===== LEFT HERO ===== */
+      .hero {
+        position: relative;
+        padding: 50px 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 20px;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at 30% 30%,
+          rgba(99, 102, 241, 0.25),
+          transparent 60%
+        );
+      }
+
+      .badge {
+        display: inline-block;
+        background: rgba(99, 102, 241, 0.2);
+        color: #c7d2fe;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        width: max-content;
+      }
+
+      .title {
+        font-size: 34px;
+        line-height: 1.2;
+        font-weight: 700;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeUp 0.8s ease forwards 0.2s;
+      }
+
+      .subtitle {
+        opacity: 0.7;
+        line-height: 1.6;
+        max-width: 420px;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeUp 0.8s ease forwards 0.4s;
+      }
+
+      .points {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+      }
+      .point {
+        font-size: 14px;
+        opacity: 0.85;
+        display: flex;
+        gap: 8px;
+        align-items: flex-start;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeUp 0.6s ease forwards;
+      }
+      .point:nth-child(1) {
+        animation-delay: 0.6s;
+      }
+      .point:nth-child(2) {
+        animation-delay: 0.7s;
+      }
+      .point:nth-child(3) {
+        animation-delay: 0.8s;
+      }
+
+      /* ===== RIGHT FORM ===== */
+      .panel {
+        background: rgba(0, 0, 0, 0.35);
+        padding: 40px 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .switch {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .switch button {
+        flex: 1;
+        padding: 10px;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        background: #020617;
+        color: #cbd5f5;
+        transition: 0.3s;
+      }
+
+      .switch .active {
+        background: #6366f1;
+        color: #fff;
+      }
+
+      .forms {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .form {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        transition: 0.5s ease;
+      }
+
+      input {
+        padding: 12px 14px;
+        border-radius: 10px;
+        border: none;
+        background: #020617;
+        color: #fff;
+      }
+
+      .submit {
+        padding: 12px;
+        border: none;
+        border-radius: 10px;
+        background: #6366f1;
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      .submit:hover {
+        transform: translateY(-2px);
+      }
+
+      .hint {
+        font-size: 12px;
+        opacity: 0.6;
+      }
+
+      /* SLIDE */
+      .slide-left {
+        transform: translateX(0);
+      }
+      .slide-right {
+        transform: translateX(110%);
+        position: absolute;
+        top: 0;
+        width: 100%;
+      }
+
+      /* ANIM */
+      @keyframes fadeUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
   </head>
   <body>
-    <!-- Toast Container -->
-    <div id="toast-container"></div>
-
-    <div class="page">
-      <div class="card">
-        <p style="font-size: 12px; opacity: 0.5; color: #9fb9ff">
-          This is a portfolio/demo application. Do not use sensitive
-          credentials.
-        </p>
-        <div class="tabs">
-          <button id="loginTab" class="tab active">Login</button>
-          <button id="registerTab" class="tab">Create Account</button>
+    <div class="auth">
+      <!-- LEFT HERO -->
+      <div class="hero">
+        <div class="badge">Alex Legacy</div>
+        <div class="title">Build. Manage. Grow your projects.</div>
+        <div class="subtitle">
+          Access your dashboard, upload projects, manage content, and control
+          everything in one place.
         </div>
+        <div class="points">
+          <div class="point">✔ Create an account in seconds</div>
+          <div class="point">✔ Secure login system</div>
+          <div class="point">✔ Manage your data easily</div>
+        </div>
+      </div>
+      <!-- RIGHT PANEL -->
+      <div class="panel">
+        <div class="switch">
+          <button id="loginBtn" class="active">Login</button>
+          <button id="registerBtn">Create</button>
+        </div>
+        <div class="forms">
+          <!-- LOGIN -->
+          <form id="loginForm" class="form slide-left">
+            <input placeholder="Email" required />
+            <input type="password" placeholder="Password" required />
+            <div class="hint">Enter your email and password to continue.</div>
+            <button class="submit">Login</button>
+          </form>
 
-        <!-- LOGIN -->
-        <form id="loginForm" class="form show">
-          <h2>Welcome Back</h2>
-
-          <input
-            type="email"
-            name="email"
-            placeholder="Email address"
-            required
-            id="regEmail"
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            required
-            id="regPassword"
-          />
-
-          <button class="primary">Login</button>
-        </form>
-
-        <!-- REGISTER -->
-        <form id="registerForm" class="form">
-          <h2>Create Account</h2>
-
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            required
-            id="regUsername"
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email address"
-            required
-            id="regEmail"
-          />
-
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            required
-            id="regPassword"
-          />
-
-          <button class="primary">Register</button>
-        </form>
+          <!-- REGISTER -->
+          <form id="registerForm" class="form slide-right">
+            <input placeholder="Full Name" required />
+            <input placeholder="Email" required />
+            <input type="password" placeholder="Password" required />
+            <div class="hint">Use a strong password and valid email.</div>
+            <button class="submit">Create Account</button>
+          </form>
+        </div>
       </div>
     </div>
-    <script src="login.js"></script>
+    <script>
+      const loginBtn = document.getElementById("loginBtn");
+      const registerBtn = document.getElementById("registerBtn");
+      const loginForm = document.getElementById("loginForm");
+      const registerForm = document.getElementById("registerForm");
+
+      loginBtn.onclick = () => {
+        loginBtn.classList.add("active");
+        registerBtn.classList.remove("active");
+        loginForm.classList.remove("slide-right");
+        loginForm.classList.add("slide-left");
+        registerForm.classList.add("slide-right");
+      };
+
+      registerBtn.onclick = () => {
+        registerBtn.classList.add("active");
+        loginBtn.classList.remove("active");
+        loginForm.classList.remove("slide-left");
+        loginForm.classList.add("slide-right");
+        registerForm.classList.remove("slide-right");
+      };
+
+      registerForm.addEventListener("submit", async (e) => {
+        try {
+          e.preventDefault();
+          const data = Object.fromEntries(new FormData(registerForm));
+
+          const res = await fetch(
+            "https://alexsite-qpff.onrender.com/register",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data),
+            },
+          );
+
+          if (res.ok) {
+            showToast("registration successfully", "success");
+            loginBtn.click();
+          }
+
+          showToast(
+            "An error occurred during registration. Please try again.",
+            "error",
+          );
+        } catch (err) {
+          console.error("Registration error:", err);
+          showToast(
+            "An error occurred during registration. Please try again.",
+            "error",
+          );
+        }
+      });
+
+      loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(loginForm));
+
+        const res = await fetch("https://alexsite-qpff.onrender.com/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+
+        const user = await res.json();
+
+        if (!res.ok) {
+          showToast("Login failed", "error");
+          return;
+        }
+
+        // Save token in localStorage
+        localStorage.setItem("token", user.token);
+
+        // Redirect user
+        const redirect = localStorage.getItem("redirectAfterLogin");
+
+        if (redirect) {
+          localStorage.removeItem("redirectAfterLogin");
+          window.location.href = redirect;
+        } else {
+          window.location.href = "login.html";
+        }
+      });
+
+      // showtoast function**********************************8
+      function showToast(message, type = "success", duration = 4000) {
+        const container = document.getElementById("toast-container");
+
+        // Create toast
+        const toast = document.createElement("div");
+        toast.classList.add("toast", `toast-${type}`);
+
+        // HTML structure
+        toast.innerHTML = `
+    <span>${message}</span>
+    <span class="close-btn">&times;</span>
+    <div class="toast-progress"></div>
+  `;
+
+        // Add to container
+        container.appendChild(toast);
+
+        // Slide-in animation
+        toast.style.animation = `slideIn 0.5s forwards`;
+
+        // Progress bar animation
+        const progress = toast.querySelector(".toast-progress");
+        progress.style.animation = `progressBar ${duration}ms linear forwards`;
+
+        // Close button
+        toast.querySelector(".close-btn").onclick = () => removeToast(toast);
+
+        // Auto-remove after duration
+        const autoRemove = setTimeout(() => removeToast(toast), duration);
+
+        // Remove function
+        function removeToast(toastElement) {
+          toastElement.style.animation = `slideOut 0.5s forwards`;
+          setTimeout(() => {
+            if (toastElement.parentNode)
+              toastElement.parentNode.removeChild(toastElement);
+          }, 500);
+          clearTimeout(autoRemove);
+        }
+      }
+    </script>
   </body>
 </html>
